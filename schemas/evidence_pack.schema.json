@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-decomposer/schemas/evidence_pack/v1.json",
+  "title": "EvidencePack",
+  "description": "Normalised, machine-readable bundle of architectural evidence (A1..A6) for one monolith.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "system",
+    "evidence_mode",
+    "components",
+    "api_endpoints",
+    "persistence_entities",
+    "dependency_edges",
+    "classes",
+    "technology_map",
+    "dynamic_interactions",
+    "source_summary"
+  ],
+  "properties": {
+    "system": {
+      "type": "string",
+      "enum": ["demo", "jpetstore-6", "spring-petclinic", "PartsUnlimitedMRP"]
+    },
+    "evidence_mode": {
+      "type": "string",
+      "enum": ["llm", "deterministic", "external"]
+    },
+    "source_summary": {
+      "type": ["string", "null"],
+      "description": "Compressed source-tree summary (Phase-1 output) when evidence_mode == 'llm'. May be null in other modes."
+    },
+    "classes": {
+      "type": "array",
+      "description": "Inventory of all production classes detected in the codebase (A6 grounding).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "package"],
+        "properties": {
+          "id":           { "type": "string", "pattern": "^K_[0-9]+$" },
+          "name":         { "type": "string" },
+          "package":      { "type": "string" },
+          "file_path":    { "type": ["string", "null"] },
+          "kind":         { "type": ["string", "null"], "enum": [null, "class", "interface", "enum", "annotation"] },
+          "stereotypes":  {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Heuristic role labels: 'controller', 'service', 'repository', 'entity', 'dto', 'util', 'config', 'resource', 'servlet', ..."
+          }
+        }
+      }
+    },
+    "components": {
+      "type": "array",
+      "description": "A1 + A2 — logical components and the classes they contain.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "classes"],
+        "properties": {
+          "id":               { "type": "string", "pattern": "^C[0-9]+$" },
+          "name":             { "type": "string" },
+          "type":             { "type": ["string", "null"], "description": "controller | service | repository | infrastructure | ..." },
+          "classes":          { "type": "array", "items": { "type": "string" }, "description": "Simple class names." },
+          "responsibilities": { "type": "array", "items": { "type": "string" } },
+          "package_prefix":   { "type": ["string", "null"] }
+        }
+      }
+    },
+    "api_endpoints": {
+      "type": "array",
+      "description": "A3 — public-facing HTTP/RPC endpoints if any.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "method", "path", "handler_class"],
+        "properties": {
+          "id":               { "type": "string", "pattern": "^API_[0-9]+$" },
+          "method":           { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "ANY"] },
+          "path":             { "type": "string" },
+          "handler_class":    { "type": "string" },
+          "handler_method":   { "type": ["string", "null"] },
+          "related_entities": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "persistence_entities": {
+      "type": "array",
+      "description": "Entity/repository pairs derived from JPA/MyBatis/Spring Data or hand-coded DAOs.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["entity"],
+        "properties": {
+          "entity":     { "type": "string" },
+          "repository": { "type": ["string", "null"] },
+          "tables":     { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "dependency_edges": {
+      "type": "array",
+      "description": "A6 — class-to-class structural relationships.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "source", "target", "type"],
+        "properties": {
+          "id":     { "type": "string", "pattern": "^E_[0-9]+$" },
+          "source": { "type": "string", "description": "Simple class name of caller." },
+          "target": { "type": "string", "description": "Simple class name of callee." },
+          "type":   { "type": "string", "enum": ["CALLS", "USES", "CREATES", "EXTENDS", "IMPLEMENTS"] },
+          "weight": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "dynamic_interactions": {
+      "type": "array",
+      "description": "A5 — sequence-style scenarios (LLM-inferred unless evidence_mode == 'deterministic').",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "scenario", "sequence"],
+        "properties": {
+          "id":       { "type": "string", "pattern": "^S_[0-9]+$" },
+          "scenario": { "type": "string" },
+          "sequence": { "type": "array", "items": { "type": "string" } },
+          "trigger":  { "type": ["string", "null"], "description": "API endpoint or event that initiates the scenario." }
+        }
+      }
+    },
+    "technology_map": {
+      "type": "object",
+      "description": "A4 — high-level technology landscape.",
+      "additionalProperties": false,
+      "properties": {
+        "framework":      { "type": ["string", "null"] },
+        "language":       { "type": ["string", "null"] },
+        "database":       { "type": ["string", "null"] },
+        "build":          { "type": ["string", "null"] },
+        "container":      { "type": ["string", "null"] },
+        "other":          { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "component_diagram": {
+      "type": ["string", "null"],
+      "description": "A1 — free-form text or Mermaid diagram; optional."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "generated_at_utc": { "type": "string", "format": "date-time" },
+        "evidence_mode":    { "type": "string" },
+        "model":            { "type": ["string", "null"] },
+        "tokens_used":      { "type": ["integer", "null"], "minimum": 0 }
+      }
+    }
+  }
+}

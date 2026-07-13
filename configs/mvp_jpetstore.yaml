@@ -1,0 +1,22 @@
+# MVP profile: JPetStore only, default LLM-mode evidence, 3 candidates, 1 refinement round.
+system: jpetstore-6
+model: gpt-5
+evidence_mode: llm
+summarisation_strategy: 80k_concat
+num_candidates: 3
+max_refinement_rounds: 1
+seed: 1
+objectives:
+  structural_modularity: 0.30
+  domain_alignment:      0.30
+  cyclic_independence:   0.20
+  migration_feasibility: 0.20
+constraints:
+  each_class_assigned_once: true
+  allow_unassigned_classes: false
+  max_services: null
+  min_services: 2
+ablation_flags:
+  no_domain_agent: false
+  no_quality_gate: false
+  no_refiner:      false

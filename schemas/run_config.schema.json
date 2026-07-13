@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-decomposer/schemas/run_config/v1.json",
+  "title": "RunConfig",
+  "description": "Frozen configuration for one agentic-decomposer run. Produced by the CLI/config loader; consumed read-only by every agent.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "system",
+    "repo_path",
+    "model",
+    "evidence_mode",
+    "summarisation_strategy",
+    "num_candidates",
+    "max_refinement_rounds",
+    "objectives",
+    "constraints",
+    "seed",
+    "ablation_flags"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "Unique run identifier, also the run-folder name. Convention: <system>_<modelslug>_<strategy>_seed<N>."
+    },
+    "system": {
+      "type": "string",
+      "enum": ["demo", "jpetstore-6", "spring-petclinic", "PartsUnlimitedMRP"]
+    },
+    "metrics_app": {
+      "type": "string",
+      "description": "Name used by the external metric engine for this system.",
+      "enum": ["demo", "jpetstore", "spring-petclinic", "partsunlimited"]
+    },
+    "repo_path": {
+      "type": "string",
+      "description": "Workspace-relative path to the codebase folder. Always under codebases/."
+    },
+    "commit_sha": {
+      "type": ["string", "null"],
+      "description": "Pinned commit SHA of the codebase, if recorded."
+    },
+    "model": {
+      "type": "string",
+      "description": "LiteLLM model string (e.g. 'gpt-5', 'anthropic/claude-sonnet-4-20250514')."
+    },
+    "evidence_mode": {
+      "type": "string",
+      "enum": ["llm", "deterministic", "external"]
+    },
+    "external_views_dir": {
+      "type": ["string", "null"],
+      "description": "Required when evidence_mode == 'external'."
+    },
+    "summarisation_strategy": {
+      "type": "string",
+      "enum": [
+        "30k_concat", "30k_aggregate",
+        "50k_concat", "50k_aggregate",
+        "80k_concat", "80k_aggregate",
+        "hierarchical"
+      ]
+    },
+    "num_candidates": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "max_refinement_rounds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "objectives": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "structural_modularity",
+        "domain_alignment",
+        "cyclic_independence",
+        "migration_feasibility"
+      ],
+      "properties": {
+        "structural_modularity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "domain_alignment":      { "type": "number", "minimum": 0, "maximum": 1 },
+        "cyclic_independence":   { "type": "number", "minimum": 0, "maximum": 1 },
+        "migration_feasibility": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "each_class_assigned_once",
+        "allow_unassigned_classes",
+        "min_services"
+      ],
+      "properties": {
+        "each_class_assigned_once": { "type": "boolean" },
+        "allow_unassigned_classes": { "type": "boolean" },
+        "max_services":             { "type": ["integer", "null"], "minimum": 1 },
+        "min_services":             { "type": "integer",            "minimum": 1 }
+      }
+    },
+    "ablation_flags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["no_domain_agent", "no_quality_gate", "no_refiner"],
+      "properties": {
+        "no_domain_agent":  { "type": "boolean" },
+        "no_quality_gate":  { "type": "boolean" },
+        "no_refiner":       { "type": "boolean" }
+      }
+    },
+    "seed": { "type": "integer", "minimum": 0 },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "framework_version": { "type": "string" }
+  }
+}

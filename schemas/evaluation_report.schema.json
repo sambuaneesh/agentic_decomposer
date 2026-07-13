@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-decomposer/schemas/evaluation_report/v1.json",
+  "title": "EvaluationReport",
+  "description": "Per-candidate evaluation results combining external metric-engine scores, quality-gate findings, and actionable diagnostics for the Refiner.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["system", "candidate_results"],
+  "properties": {
+    "system": {
+      "type": "string",
+      "enum": ["demo", "jpetstore-6", "spring-petclinic", "PartsUnlimitedMRP"]
+    },
+    "candidate_results": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/candidate_result" }
+    },
+    "best_candidate_id": {
+      "type": "string",
+      "description": "Controller-selected best candidate, based on composite_score and quality_gates."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "evaluated_at_utc":      { "type": "string", "format": "date-time" },
+        "metric_engine_used":    { "type": "boolean" },
+        "metric_engine_path":    { "type": ["string", "null"] }
+      }
+    }
+  },
+  "$defs": {
+    "candidate_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "metrics",
+        "quality_gates",
+        "composite_score",
+        "diagnostics",
+        "recommendation"
+      ],
+      "properties": {
+        "candidate_id": { "type": "string" },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "MoJoFM":       { "type": ["number", "null"] },
+            "CiD":          { "type": ["number", "null"] },
+            "CMod":         { "type": ["number", "null"] },
+            "BCP":          { "type": ["number", "null"] },
+            "DI":           { "type": ["number", "null"] },
+            "TC":           { "type": ["number", "null"] },
+            "LC":           { "type": ["number", "null"] },
+            "DTP":          { "type": ["number", "null"] },
+            "num_services": { "type": ["number", "null"] }
+          }
+        },
+        "quality_gates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "all_classes_assigned",
+            "no_duplicate_classes",
+            "no_empty_services",
+            "unique_service_names",
+            "valid_class_names_only",
+            "all_services_have_evidence_refs",
+            "all_evidence_refs_valid",
+            "service_count_within_bounds",
+            "cyclic_dependency_count",
+            "orphan_class_count"
+          ],
+          "properties": {
+            "all_classes_assigned":      { "type": "boolean" },
+            "no_duplicate_classes":      { "type": "boolean" },
+            "no_empty_services":         { "type": "boolean" },
+            "unique_service_names":      { "type": "boolean" },
+            "valid_class_names_only":    { "type": "boolean" },
+            "no_self_dependencies":      { "type": "boolean" },
+            "all_dependency_targets_exist": { "type": "boolean" },
+            "all_services_have_rationale_or_responsibility": { "type": "boolean" },
+            "all_services_have_evidence_refs": { "type": "boolean" },
+            "all_evidence_refs_valid": { "type": "boolean" },
+            "service_count_within_bounds": { "type": "boolean" },
+            "cyclic_dependency_count":   { "type": "integer", "minimum": 0 },
+            "orphan_class_count":        { "type": "integer", "minimum": 0 },
+            "service_count":             { "type": "integer", "minimum": 0 },
+            "duplicate_service_names": { "type": "array", "items": { "type": "string" } },
+            "duplicate_class_assignments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["class", "services"],
+                "properties": {
+                  "class":    { "type": "string" },
+                  "services": { "type": "array", "items": { "type": "string" }, "minItems": 2 }
+                }
+              }
+            },
+            "missing_classes": { "type": "array", "items": { "type": "string" } },
+            "invalid_class_names": { "type": "array", "items": { "type": "string" } },
+            "services_missing_evidence_refs": { "type": "array", "items": { "type": "string" } },
+            "invalid_evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["service", "ref"],
+                "properties": {
+                  "service": { "type": "string" },
+                  "ref": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "composite_score": {
+          "type": ["number", "null"],
+          "description": "Internal controller score; not for publication. Higher is better."
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "message"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "low_cyclic_independence",
+                  "low_modularity",
+                  "low_domain_independence",
+                  "low_business_context_purity",
+                  "low_team_alignment",
+                  "low_mojofm",
+                  "cyclic_dependency",
+                  "oversized_service",
+                  "tiny_service",
+                  "duplicate_service_name",
+                  "duplicate_class",
+                  "missing_class",
+                  "missing_evidence_ref",
+                  "invalid_evidence_ref",
+                  "service_count_out_of_bounds",
+                  "invalid_class_name",
+                  "schema_violation",
+                  "other"
+                ]
+              },
+              "message":           { "type": "string" },
+              "affected_services": { "type": "array", "items": { "type": "string" } },
+              "affected_classes":  { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "recommendation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "priority_fixes"],
+          "properties": {
+            "status":          { "type": "string", "enum": ["accept", "refine", "reject"] },
+            "priority_fixes":  { "type": "array", "items": { "type": "string" } },
+            "suggested_operations": {
+              "type": "array",
+              "description": "Hints for the Refiner; do not bind, but help focus its search.",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "move_class",
+                  "split_service",
+                  "merge_services",
+                  "rename_service",
+                  "add_dependency",
+                  "remove_invalid_dependency",
+                  "reassign_responsibility"
+                ]
+              }
+            }
+          }
+        },
+        "engine_output_path": {
+          "type": ["string", "null"],
+          "description": "Workspace-relative path to the raw metric-engine output JSON, for audit."
+        }
+      }
+    }
+  }
+}

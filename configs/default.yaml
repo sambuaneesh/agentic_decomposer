@@ -1,0 +1,36 @@
+# Default RunConfig.
+#
+# CLI flags override values in this file. See ``docs/usage.md`` for the full
+# set of supported keys.
+
+# Required (override per run):
+system: jpetstore-6
+model: gpt-5
+
+# Pipeline knobs:
+evidence_mode: llm                  # llm | deterministic | external
+summarisation_strategy: 80k_concat  # see docs/usage.md for the full list
+num_candidates: 3
+max_refinement_rounds: 1
+seed: 1
+
+# Objective weights — used by the controller's composite score, not by the
+# published metrics. Must sum to 1.0 (not enforced; the controller normalises).
+objectives:
+  structural_modularity: 0.30
+  domain_alignment:      0.30
+  cyclic_independence:   0.20
+  migration_feasibility: 0.20
+
+# Structural constraints checked by the Quality Gate.
+constraints:
+  each_class_assigned_once: true
+  allow_unassigned_classes: false
+  max_services: null
+  min_services: 2
+
+# Ablation toggles — leave false for the full agentic pipeline.
+ablation_flags:
+  no_domain_agent: false
+  no_quality_gate: false
+  no_refiner:      false

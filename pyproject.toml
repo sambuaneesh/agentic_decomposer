@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic_decomposer"
+version = "0.1.0"
+description = "Multi-agent framework for monolith-to-microservices decomposition."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Agentic decomposition project" },
+]
+dependencies = [
+    "litellm~=1.51",
+    "jsonschema~=4.23",
+    "PyYAML~=6.0",
+    "networkx~=3.3",
+    "javalang~=0.13.0",
+    "tiktoken~=0.8",
+    "pydantic~=2.9",
+    "pandas~=2.2",
+    "rich~=13.9",
+]
+
+[project.scripts]
+agentic-decomposer = "agentic_decomposer.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "." }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["agentic_decomposer*"]
+exclude = ["runs*", "docs*", "schemas*", "prompts*", "configs*", "experiments*"]

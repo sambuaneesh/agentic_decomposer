@@ -1,0 +1,33 @@
+# Core runtime dependencies for agentic_decomposer.
+#
+# Versions are pinned with a `~=` minor-compatible specifier so reruns are
+# reproducible without locking us to an exact patch version. Upgrade with care
+# and re-record results in docs/changelog.md when bumping.
+
+# Multi-provider LLM client. One import, swap models via the `model` string.
+litellm~=1.51
+
+# JSON Schema validation for every inter-agent artifact.
+jsonschema~=4.23
+
+# Run configs are written as YAML for human ergonomics.
+PyYAML~=6.0
+
+# Graph operations on the static dependency graph (cycle detection, components).
+networkx~=3.3
+
+# Lightweight Java parser used by the deterministic A1..A5 evidence mode.
+# (Optional; the framework still works without it when --evidence-mode llm is used.)
+javalang~=0.13.0
+
+# Token counting for LLM-bound agents (OpenAI/Anthropic style BPE tokenisation).
+tiktoken~=0.8
+
+# Typed config objects + validation.
+pydantic~=2.9
+
+# Tabular reporting (per-candidate scores, ablation tables).
+pandas~=2.2
+
+# Progress bars and human-readable logging in long runs.
+rich~=13.9

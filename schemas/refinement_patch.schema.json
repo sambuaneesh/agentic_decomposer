@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-decomposer/schemas/refinement_patch/v1.json",
+  "title": "RefinementPatch",
+  "description": "Controlled edits the Refiner applies to a candidate decomposition. The patch is the audit trail of what changed and why; the actual refined decomposition is written separately as a CandidateDecompositions document.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "candidate_id",
+    "refinement_round",
+    "operations",
+    "expected_metric_effect"
+  ],
+  "properties": {
+    "candidate_id": {
+      "type": "string",
+      "description": "ID of the candidate being refined (before this round)."
+    },
+    "refinement_round": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/operation" }
+    },
+    "expected_metric_effect": {
+      "type": "object",
+      "description": "Refiner's predicted direction per Wang metric. Used to detect when refinement actually hurt the candidate.",
+      "additionalProperties": false,
+      "properties": {
+        "MoJoFM":   { "$ref": "#/$defs/direction" },
+        "CiD":      { "$ref": "#/$defs/direction" },
+        "CMod":     { "$ref": "#/$defs/direction" },
+        "BCP":      { "$ref": "#/$defs/direction" },
+        "DI":       { "$ref": "#/$defs/direction" },
+        "TC":       { "$ref": "#/$defs/direction" },
+        "LC":       { "$ref": "#/$defs/direction" },
+        "DTP":      { "$ref": "#/$defs/direction" }
+      }
+    },
+    "rationale": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "generated_at_utc": { "type": "string", "format": "date-time" },
+        "model":            { "type": ["string", "null"] },
+        "tokens_used":      { "type": ["integer", "null"], "minimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "direction": {
+      "type": "string",
+      "enum": ["increase", "decrease", "neutral_or_slight_decrease", "neutral_or_slight_increase", "neutral", "unknown"]
+    },
+    "operation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "class", "from_service", "to_service", "reason"],
+          "properties": {
+            "operation":    { "const": "move_class" },
+            "class":        { "type": "string" },
+            "from_service": { "type": "string" },
+            "to_service":   { "type": "string" },
+            "reason":       { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "service", "split_into", "reason"],
+          "properties": {
+            "operation":  { "const": "split_service" },
+            "service":    { "type": "string" },
+            "split_into": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["name", "classes"],
+                "properties": {
+                  "name":             { "type": "string" },
+                  "classes":          { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+                  "responsibilities": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+            "reason": { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "source_services", "target_service", "reason"],
+          "properties": {
+            "operation":       { "const": "merge_services" },
+            "source_services": { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+            "target_service":  { "type": "string" },
+            "reason":          { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "from_name", "to_name", "reason"],
+          "properties": {
+            "operation": { "const": "rename_service" },
+            "from_name": { "type": "string" },
+            "to_name":   { "type": "string" },
+            "reason":    { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "from_service", "to_service", "reason"],
+          "properties": {
+            "operation":    { "const": "add_dependency" },
+            "from_service": { "type": "string" },
+            "to_service":   { "type": "string" },
+            "reason":       { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "from_service", "to_service", "reason"],
+          "properties": {
+            "operation":    { "const": "remove_invalid_dependency" },
+            "from_service": { "type": "string" },
+            "to_service":   { "type": "string" },
+            "reason":       { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["operation", "service", "responsibility", "reason"],
+          "properties": {
+            "operation":      { "const": "reassign_responsibility" },
+            "service":        { "type": "string" },
+            "responsibility": { "type": "string" },
+            "from_service":   { "type": ["string", "null"] },
+            "reason":         { "type": "string" }
+          }
+        }
+      ]
+    }
+  }
+}

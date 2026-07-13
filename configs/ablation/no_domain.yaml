@@ -1,0 +1,12 @@
+# Ablation variant: no Domain Agent.
+system: jpetstore-6
+model: gpt-5
+evidence_mode: llm
+summarisation_strategy: 80k_concat
+num_candidates: 3
+max_refinement_rounds: 1
+seed: 1
+ablation_flags:
+  no_domain_agent: true
+  no_quality_gate: false
+  no_refiner:      false

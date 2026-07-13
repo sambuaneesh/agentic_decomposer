@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-decomposer/schemas/final_output/v1.json",
+  "title": "FinalOutput",
+  "description": "Run-level summary written by the Process Controller. Points at the selected decomposition, captures comparison rows against any baselines, and records cost/runtime metadata for the experiment harness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "system",
+    "selected_candidate_id",
+    "final_metrics",
+    "run_metadata",
+    "comparison"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "system": {
+      "type": "string",
+      "enum": ["demo", "jpetstore-6", "spring-petclinic", "PartsUnlimitedMRP"]
+    },
+    "selected_candidate_id": { "type": "string" },
+    "selected_decomposition_path": {
+      "type": "string",
+      "description": "Workspace-relative path to the B0-compatible decomposition.json that downstream tooling should consume."
+    },
+    "final_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "MoJoFM":       { "type": ["number", "null"] },
+        "CiD":          { "type": ["number", "null"] },
+        "CMod":         { "type": ["number", "null"] },
+        "BCP":          { "type": ["number", "null"] },
+        "DI":           { "type": ["number", "null"] },
+        "TC":           { "type": ["number", "null"] },
+        "LC":           { "type": ["number", "null"] },
+        "DTP":          { "type": ["number", "null"] },
+        "num_services": { "type": ["number", "null"] }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "description": "Optional metric rows for B0 (single-shot baseline), the agentic initial best candidate, and the agentic refined candidate. Any absent row is null.",
+      "additionalProperties": false,
+      "properties": {
+        "single_llm_baseline":     { "$ref": "#/$defs/metric_row" },
+        "agentic_initial_best":    { "$ref": "#/$defs/metric_row" },
+        "agentic_refined":         { "$ref": "#/$defs/metric_row" }
+      }
+    },
+    "migration_roadmap": {
+      "type": "array",
+      "description": "Ordered extraction guidance the controller may emit; out of scope for the MVP minimum, populated when available.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["step", "service", "reason"],
+        "properties": {
+          "step":    { "type": "integer", "minimum": 1 },
+          "service": { "type": "string" },
+          "reason":  { "type": "string" }
+        }
+      }
+    },
+    "run_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "total_tokens",
+        "total_runtime_seconds",
+        "num_refinement_rounds",
+        "model"
+      ],
+      "properties": {
+        "total_tokens":          { "type": "integer", "minimum": 0 },
+        "input_tokens":          { "type": ["integer", "null"], "minimum": 0 },
+        "output_tokens":         { "type": ["integer", "null"], "minimum": 0 },
+        "total_runtime_seconds": { "type": "number", "minimum": 0 },
+        "num_refinement_rounds": { "type": "integer", "minimum": 0 },
+        "model":                 { "type": "string" },
+        "evidence_mode":         { "type": "string" },
+        "summarisation_strategy":{ "type": "string" },
+        "ablation_flags": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "no_domain_agent":  { "type": "boolean" },
+            "no_quality_gate":  { "type": "boolean" },
+            "no_refiner":       { "type": "boolean" }
+          }
+        },
+        "stopping_reason": {
+          "type": "string",
+          "enum": ["max_rounds_reached", "quality_gates_passed", "no_metric_improvement", "token_budget_exceeded", "no_refinement_requested"]
+        },
+        "framework_version": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "metric_row": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "candidate_id": { "type": ["string", "null"] },
+            "metrics": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "MoJoFM":       { "type": ["number", "null"] },
+                "CiD":          { "type": ["number", "null"] },
+                "CMod":         { "type": ["number", "null"] },
+                "BCP":          { "type": ["number", "null"] },
+                "DI":           { "type": ["number", "null"] },
+                "TC":           { "type": ["number", "null"] },
+                "LC":           { "type": ["number", "null"] },
+                "DTP":          { "type": ["number", "null"] },
+                "num_services": { "type": ["number", "null"] }
+              }
+            },
+            "source": { "type": "string", "description": "Where this row came from: e.g. 'results/codex/baseline-1/<repo>/decomposition.json' or 'this_run'." }
+          }
+        }
+      ]
+    }
+  }
+}

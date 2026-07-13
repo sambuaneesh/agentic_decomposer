@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentic-decomposer/schemas/domain_model/v1.json",
+  "title": "DomainModel",
+  "description": "Business capabilities, bounded-context hypotheses, and class-to-capability mapping inferred from an evidence_pack.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "system",
+    "business_capabilities",
+    "bounded_context_hypotheses",
+    "class_capability_matrix"
+  ],
+  "properties": {
+    "system": {
+      "type": "string",
+      "enum": ["demo", "jpetstore-6", "spring-petclinic", "PartsUnlimitedMRP"]
+    },
+    "business_capabilities": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "description", "related_terms", "related_classes"],
+        "properties": {
+          "id":            { "type": "string", "pattern": "^BC[0-9]+$" },
+          "name":          { "type": "string" },
+          "description":   { "type": "string" },
+          "related_terms": { "type": "array", "items": { "type": "string" } },
+          "related_classes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["class", "confidence", "evidence"],
+              "properties": {
+                "class":      { "type": "string", "description": "Simple class name." },
+                "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+                "evidence":   {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description": "Citations like 'class name', 'API_004', 'Scenario_02', 'package name'."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "bounded_context_hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "classes", "rationale"],
+        "properties": {
+          "name":      { "type": "string" },
+          "classes":   { "type": "array", "items": { "type": "string" } },
+          "rationale": { "type": "string" },
+          "related_capability_ids": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^BC[0-9]+$" }
+          }
+        }
+      }
+    },
+    "class_capability_matrix": {
+      "type": "array",
+      "description": "Flat mapping for easy CSV export and downstream consumption.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["class", "capability_id", "confidence"],
+        "properties": {
+          "class":         { "type": "string" },
+          "capability_id": { "type": "string", "pattern": "^BC[0-9]+$" },
+          "capability_name": { "type": ["string", "null"] },
+          "confidence":    { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "generated_at_utc": { "type": "string", "format": "date-time" },
+        "model":            { "type": ["string", "null"] },
+        "tokens_used":      { "type": ["integer", "null"], "minimum": 0 },
+        "ablation_no_domain_agent": {
+          "type": "boolean",
+          "description": "True if the framework ran with --no-domain-agent; the rest of the file will be empty."
+        }
+      }
+    }
+  }
+}
