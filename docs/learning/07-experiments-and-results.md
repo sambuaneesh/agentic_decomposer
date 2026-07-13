@@ -92,7 +92,9 @@ Component ablations are:
 
 | Variant | Meaning |
 |---------|---------|
-| `A_no_domain` | Remove Domain Agent to test whether domain modeling matters. |
+| `A_no_domain` | Remove Domain Agent (placeholder) to test whether domain modeling matters. > **⚠️ TEMPORARY PLACEHOLDER — NOT CONCRETIZED.** The Domain Knowledge
+> Extractor is a bare placeholder (single LLM call + prompt). Planned for
+> proper development in V2. Treat as temporary scaffold. |
 | `A_no_qg` | Remove Quality Gate effects to test governance value. |
 | `A_1cand_refined` | Keep refinement but remove multi-candidate diversity. |
 
@@ -152,7 +154,7 @@ Do not ask only "did A3 beat B0?" Ask a more careful set of questions:
 Expected pattern:
 
 - CiD should remain high or improve.
-- DI and BCP should improve if the Domain Agent helps.
+- DI and BCP should improve if the Domain Agent helps (note: Domain Extractor is currently a placeholder).
 - TC may not improve until repository-mining signals are added.
 - Tokens and runtime will increase.
 - MoJoFM may improve, but it is not guaranteed.
@@ -168,7 +170,7 @@ agentic_decomposer/runs/A3_refined/jpetstore-6_gpt5_80kconcat_seed1/
 Then inspect:
 
 1. `01_evidence/evidence_pack.json`: did evidence look plausible?
-2. `02_domain/domain_model.json`: did capabilities make sense?
+2. `02_domain/domain_model.json` ⚠️ (placeholder): did capabilities make any sense?
 3. `03_candidates/candidate_decompositions.json`: did strategies differ?
 4. `04_evaluation/evaluation_report.json`: why did evaluator select the best?
 5. `05_refinement/refinement_patch.json`: what changed?
@@ -199,7 +201,7 @@ python agentic_decomposer/experiments/run_ablation.py --system demo --runs 1 --d
 
 - Which comparison isolates candidate diversity?
 - Which comparison isolates the Refiner?
-- Which comparison isolates the Domain Agent?
+- Which comparison isolates the Domain Agent? (Note: Domain Extractor is currently a placeholder.)
 - Why should TC be interpreted cautiously in the MVP?
 - Which artifact would you inspect to explain a metric regression after refinement?
 

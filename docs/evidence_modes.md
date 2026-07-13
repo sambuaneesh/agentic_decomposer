@@ -144,8 +144,9 @@ that downstream agents must cite:
 The A4 technology map is stored as a structured object in v1 and does not mint
 separate `T_...` evidence IDs.
 
-Domain capabilities (`BC001`, …) are minted later by the Domain Extractor and
-also referenced by the Generator and Refiner.
+Domain capabilities (`BC001`, …) are minted later by the Domain Extractor
+(⚠️ currently a placeholder — not yet concretized) and also referenced by
+the Generator and Refiner.
 
 ---
 

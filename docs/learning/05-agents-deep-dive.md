@@ -77,6 +77,16 @@ evidence modes or replace A1..A5 with previous-paper artifacts.
 
 ## Agent 2: Domain Knowledge Extractor
 
+> **⚠️ TEMPORARY PLACEHOLDER — NOT YET CONCRETIZED.**
+>
+> The Domain Knowledge Extractor has not been fully designed or built out. It is
+> currently a bare placeholder: a single LLM call hardwired to the prompt at
+> [`prompts/domain_extractor.md`](prompts/domain_extractor.md). The component
+> is planned for proper development in V2 (see
+> [docs/learning/12-next-versions-roadmap.md](docs/learning/12-next-versions-roadmap.md)),
+> where richer evidence signals will feed into a comprehensive domain modeling stage.
+> Until then, treat everything related to this component as a temporary scaffold.
+
 Open [DomainExtractorAgent](../../agentic_decomposer/agents/domain_extractor.py#L35).
 
 ### Purpose

@@ -25,7 +25,7 @@ home in your mental model.
 | [agents/base.py](../../agentic_decomposer/agents/base.py#L15) | `AgentResult` and `BaseAgent` wrapper for timing/logging. | Creating a new agent or changing common agent lifecycle. |
 | [agents/process_controller.py](../../agentic_decomposer/agents/process_controller.py#L32) | Deterministic orchestrator for the full pipeline. | Changing stage order, stopping logic, final selection. |
 | [agents/evidence_constructor.py](../../agentic_decomposer/agents/evidence_constructor.py#L53) | Builds normalized `evidence_pack.json`. | Changing A1..A6 construction or evidence modes. |
-| [agents/domain_extractor.py](../../agentic_decomposer/agents/domain_extractor.py#L35) | Builds business capabilities and class-capability matrix. | Changing domain prompt, no-domain ablation, capability normalization. |
+| [agents/domain_extractor.py](../../agentic_decomposer/agents/domain_extractor.py#L35) ⚠️ PLACEHOLDER — bare single-LLM-call scaffold. Not yet concretized. | Builds business capabilities and class-capability matrix. | Changing domain prompt, no-domain ablation, capability normalization. |
 | [agents/decomposition_generator.py](../../agentic_decomposer/agents/decomposition_generator.py#L45) | Generates candidate decompositions by strategy. | Adding a generation strategy or changing candidate cleanup. |
 | [agents/decomposition_evaluator.py](../../agentic_decomposer/agents/decomposition_evaluator.py#L59) | Scores candidates, runs quality checks, builds diagnostics. | Changing metric integration, recommendation logic, ranking CSV. |
 | [agents/quality_gate.py](../../agentic_decomposer/agents/quality_gate.py#L18) | Writes standalone selected-candidate quality report. | Changing quality report artifact behavior. |
@@ -86,7 +86,7 @@ home in your mental model.
 |--------|------------------|
 | [run_config.schema.json](../../schemas/run_config.schema.json#L1) | Experiment settings and reproducibility metadata. |
 | [evidence_pack.schema.json](../../schemas/evidence_pack.schema.json#L1) | A1..A6 normalized evidence structure. |
-| [domain_model.schema.json](../../schemas/domain_model.schema.json#L1) | Business capabilities and class-capability mapping. |
+| [domain_model.schema.json](../../schemas/domain_model.schema.json#L1) ⚠️ (placeholder component) | Business capabilities and class-capability mapping. |
 | [candidate_decomposition.schema.json](../../schemas/candidate_decomposition.schema.json#L1) | Candidate service partitions. |
 | [evaluation_report.schema.json](../../schemas/evaluation_report.schema.json#L1) | Metrics, quality gates, diagnostics, recommendations. |
 | [refinement_patch.schema.json](../../schemas/refinement_patch.schema.json#L1) | Controlled refinement operation list. |
@@ -97,7 +97,7 @@ home in your mental model.
 | Prompt | Used By | Change Carefully Because... |
 |--------|---------|-----------------------------|
 | [evidence_views.md](../../prompts/evidence_views.md) | Evidence Constructor | It changes A1..A5 evidence produced by LLM. |
-| [domain_extractor.md](../../prompts/domain_extractor.md) | Domain Extractor | It changes domain capabilities and class mappings. |
+| [domain_extractor.md](../../prompts/domain_extractor.md) | Domain Extractor ⚠️ (placeholder prompt) | It changes domain capabilities and class mappings. |
 | [generator_common.md](../../prompts/generator_common.md) | Generator | It changes the core candidate contract shown to the model. |
 | [generator_dependency_first.md](../../prompts/generator_dependency_first.md) | Generator | It changes dependency-first candidate behavior. |
 | [generator_domain_first.md](../../prompts/generator_domain_first.md) | Generator | It changes domain-first candidate behavior. |
@@ -110,7 +110,7 @@ home in your mental model.
 |--------|-----|
 | [mvp_jpetstore.yaml](../../configs/mvp_jpetstore.yaml) | First real MVP run on JPetStore. |
 | [mvp_all_systems.yaml](../../configs/mvp_all_systems.yaml) | All-four-system profile. |
-| [ablation/no_domain.yaml](../../configs/ablation/no_domain.yaml) | Domain Agent ablation. |
+| [ablation/no_domain.yaml](../../configs/ablation/no_domain.yaml) | Domain Agent (placeholder) ablation. |
 | [ablation/no_refiner.yaml](../../configs/ablation/no_refiner.yaml) | Refiner ablation. |
 | [ablation/no_quality_gate.yaml](../../configs/ablation/no_quality_gate.yaml) | Quality Gate ablation. |
 

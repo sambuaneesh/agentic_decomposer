@@ -24,7 +24,7 @@ Monolith repo (pinned SHA)
 [Architectural Evidence Constructor] ──► evidence_pack.json   (A1..A5 + A6)
    │
    ▼
-[Domain Knowledge Extractor]          ──► domain_model.json
+[Domain Knowledge Extractor]          ──► domain_model.json  ⚠️  (placeholder — not yet concretized)
    │
    ▼
 [Decomposition Generator]             ──► candidate_decompositions.json  (3 strategies)

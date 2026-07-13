@@ -91,7 +91,7 @@ This is equivalent to four sequential single-system runs. Outputs land in
 | `--summarisation-strategy`     | `80k_concat`     | `30k_concat` \| `30k_aggregate` \| `50k_concat` \| `50k_aggregate` \| `80k_concat` \| `80k_aggregate` \| `hierarchical` |
 | `--num-candidates`             | `3`              | Number of candidate decompositions per run                                  |
 | `--max-refinement-rounds`      | `1`              | Set to `0` to disable refinement (ablation mode)                            |
-| `--no-domain-agent`            | off              | Ablation flag — skip Domain Extractor; downstream agents see empty model    |
+| `--no-domain-agent`            | off              | Ablation flag — skip Domain Extractor (⚠️ placeholder); downstream agents see empty model    |
 | `--no-quality-gate`            | off              | Ablation flag — skip standalone Quality Gate and evaluator quality penalties |
 | `--no-refiner`                 | off              | Ablation flag — same as `--max-refinement-rounds 0`                          |
 | `--seed`                       | `1`              | Run seed; appears in `run_id` to keep repeated runs distinct                 |

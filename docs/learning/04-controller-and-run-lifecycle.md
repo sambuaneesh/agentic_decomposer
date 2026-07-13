@@ -44,7 +44,7 @@ The run lifecycle is:
 create folders
 write run_config.json
 run Evidence Constructor
-run Domain Extractor
+run Domain Extractor ⚠️ (placeholder)
 run Decomposition Generator
 run Decomposition Evaluator
 run standalone Quality Gate
@@ -87,7 +87,13 @@ This gives both speed and auditability.
 
 Read the call around [evidence stage](../../agentic_decomposer/agents/process_controller.py#L58).
 
-## Stage 3: Extract Domain Knowledge
+## Stage 3: Extract Domain Knowledge ⚠️ (PLACEHOLDER)
+
+
+> **⚠️ TEMPORARY PLACEHOLDER — NOT CONCRETIZED.** The Domain Knowledge
+> Extractor is a bare placeholder (single LLM call + prompt). Planned for
+> proper development in V2. Treat as temporary scaffold.
+
 
 The Domain Extractor receives the evidence pack. If `--no-domain-agent` is on,
 it writes an empty but schema-valid domain model. That matters because downstream

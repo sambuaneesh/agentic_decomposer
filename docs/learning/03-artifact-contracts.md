@@ -25,7 +25,7 @@ pieces are the contract enforcement layer.
 |----------|--------|----------|----------|
 | `run_config.json` | [run_config.schema.json](../../schemas/run_config.schema.json#L1) | CLI/controller | every agent |
 | `evidence_pack.json` | [evidence_pack.schema.json](../../schemas/evidence_pack.schema.json#L1) | Evidence Constructor | Domain, Generator, Evaluator, Refiner |
-| `domain_model.json` | [domain_model.schema.json](../../schemas/domain_model.schema.json#L1) | Domain Extractor | Generator, Refiner, Quality checks |
+| `domain_model.json` | [domain_model.schema.json](../../schemas/domain_model.schema.json#L1) | Domain Extractor ⚠️ (placeholder) | Generator, Refiner, Quality checks |
 | `candidate_decompositions.json` | [candidate_decomposition.schema.json](../../schemas/candidate_decomposition.schema.json#L1) | Generator | Evaluator, Refiner, Controller |
 | `evaluation_report.json` | [evaluation_report.schema.json](../../schemas/evaluation_report.schema.json#L1) | Evaluator | Refiner, Controller |
 | `refinement_patch.json` | [refinement_patch.schema.json](../../schemas/refinement_patch.schema.json#L1) | Refiner | Patcher, audit trail |
@@ -111,6 +111,11 @@ Those IDs are not decorative. They let later agents justify decisions by citing
 specific evidence.
 
 ## Artifact 3: Domain Model
+
+> **⚠️ TEMPORARY PLACEHOLDER — NOT CONCRETIZED.** The Domain Knowledge
+> Extractor is a bare placeholder (single LLM call + prompt). Planned for
+> proper development in V2. Treat as temporary scaffold.
+
 
 The domain model is the answer to: what business capabilities might this code
 represent?

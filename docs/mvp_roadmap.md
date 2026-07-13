@@ -47,11 +47,16 @@ Legend: `[x]` done · `[~]` partial · `[ ]` not started.
 - [x] `evidence/external_views.py` — loads pre-existing A1..A5 files
 - [x] `agents/evidence_constructor.py` — wires the chosen mode, mints stable IDs, normalises to `evidence_pack.json`
 
-## Stage 4 — Domain Knowledge Extractor
+## Stage 4 — Domain Knowledge Extractor ⚠️ (TEMPORARY PLACEHOLDER)
 
-- [x] `prompts/domain_extractor.md`
-- [x] `agents/domain_extractor.py` — LLM call with evidence-ID citation enforcement
-- [x] Emit `class_capability_matrix.csv`
+> **Not yet concretized.** This component is a bare placeholder: a single LLM
+> call wired to `prompts/domain_extractor.md`. The real domain modeling with
+> richer evidence signals is planned for V2. Until then, treat this stage as a
+> temporary scaffold that simply makes the pipeline run.
+
+- [~] `prompts/domain_extractor.md` — basic prompt, placeholder quality
+- [~] `agents/domain_extractor.py` — single LLM call with evidence-ID citation enforcement
+- [~] Emit `class_capability_matrix.csv` — basic, not enriched
 
 ## Stage 5 — Multi-candidate Generator
 

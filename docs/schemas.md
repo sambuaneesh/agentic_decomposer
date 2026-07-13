@@ -14,7 +14,7 @@ The schemas live in [`../schemas/`](../schemas/) and are loaded by
 | Schema file                              | Produced by                         | Consumed by                                  |
 |------------------------------------------|-------------------------------------|----------------------------------------------|
 | `run_config.schema.json`                 | CLI / config loader                 | Every agent (read-only)                      |
-| `evidence_pack.schema.json`              | Evidence Constructor                | Domain Extractor, Generator, Evaluator, Refiner |
+| `evidence_pack.schema.json`              | Evidence Constructor                | Domain Extractor ⚠️ (placeholder), Generator, Evaluator, Refiner |
 | `domain_model.schema.json`               | Domain Extractor                    | Generator, Refiner                           |
 | `candidate_decomposition.schema.json`    | Generator, Refiner                  | Evaluator, Quality Gate, Process Controller  |
 | `evaluation_report.schema.json`          | Evaluator                           | Refiner, Process Controller                  |

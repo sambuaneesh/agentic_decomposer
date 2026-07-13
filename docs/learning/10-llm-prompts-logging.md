@@ -93,7 +93,9 @@ The prompt templates live in [prompts/](../../prompts/).
 | Prompt | Used by | Purpose |
 |--------|---------|---------|
 | [evidence_views.md](../../prompts/evidence_views.md) | Evidence Constructor in `llm` mode | Ask for A1..A5 architectural views. |
-| [domain_extractor.md](../../prompts/domain_extractor.md) | Domain Extractor | Infer capabilities, contexts, vocabulary, class mapping. |
+| [domain_extractor.md](../../prompts/domain_extractor.md) | Domain Extractor ⚠️ (placeholder) | Infer capabilities, contexts, vocabulary, class mapping. > **⚠️ TEMPORARY PLACEHOLDER — NOT CONCRETIZED.** The Domain Knowledge
+> Extractor is a bare placeholder (single LLM call + prompt). Planned for
+> proper development in V2. Treat as temporary scaffold. |
 | [generator_common.md](../../prompts/generator_common.md) | Generator | Shared candidate output contract and hard rules. |
 | [generator_dependency_first.md](../../prompts/generator_dependency_first.md) | Generator | Strategy directive for low coupling and dependency structure. |
 | [generator_domain_first.md](../../prompts/generator_domain_first.md) | Generator | Strategy directive for business capabilities and bounded contexts. |

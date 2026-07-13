@@ -39,7 +39,9 @@ LLM), and **LLM** (mainly generative).
 |----------------------------------------|--------|---------------------------------------------------------------------------------------|
 | Process Controller                     | Tool   | Sequences agents, manages iterations, selects final candidate, logs everything.       |
 | Architectural Evidence Constructor     | Hybrid | Produces `evidence_pack.json` (A1..A5 from LLM/deterministic, A6 from static graph).  |
-| Domain Knowledge Extractor             | Hybrid | Produces `domain_model.json` with business capabilities + class-capability matrix.    |
+| Domain Knowledge Extractor             | Hybrid | Produces `domain_model.json` with business capabilities + class-capability matrix. > **⚠️ TEMPORARY PLACEHOLDER — NOT CONCRETIZED.** The Domain Knowledge
+> Extractor is a bare placeholder (single LLM call + prompt). Planned for
+> proper development in V2. Treat as temporary scaffold.   |
 | Decomposition Generator                | LLM    | Produces ≥1 candidate decomposition per strategy (dependency / domain / balanced).    |
 | Decomposition Evaluator                | Tool   | Runs the existing metric engine and quality-gate; produces `evaluation_report.json`.  |
 | Quality Gate (MVP) → Quality Governance (V3) | Tool/Hybrid | Schema + structural checks now; stakeholder constraints later.                   |
@@ -66,7 +68,8 @@ debuggable, ablatable, and reproducible.
                                      │ evidence_pack.json
                                      ▼
                        ┌───────────────────────────┐
-                       │  Domain Extractor         │
+                       │  Domain Extractor         │  ⚠️ Placeholder — see Stage 4 in mvp_roadmap.md
+
                        └─────────────┬─────────────┘
                                      │ domain_model.json
                                      ▼

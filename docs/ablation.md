@@ -11,15 +11,15 @@ each agent earns its place. This document describes the ablation grid run by
 Each variant is a single CLI invocation. The grid maps directly onto the
 "Ablation table" outlined in the design brief.
 
-| Variant ID | Evidence Constructor | Domain Agent | Generator        | Evaluator           | Refiner | Quality Gate | Flags                                                |
+| Variant ID | Evidence Constructor | Domain Agent | Generator        | Evaluator           | Refiner | Quality Gate | Flags                                                | Notes |
 |------------|----------------------|--------------|------------------|---------------------|---------|--------------|------------------------------------------------------|
-| `B0_single_shot` | (existing baseline) | no       | 1 candidate (old pipeline) | post-hoc scoring | no      | no           | reuse `results/<agent>/baseline-1/<repo>/decomposition.json` |
-| `A1_gen_only` | yes                | yes          | 1 candidate      | post-hoc scoring    | no      | yes          | `--num-candidates 1 --no-refiner`                    |
-| `A2_eval_select` | yes             | yes          | 3 candidates     | selects best        | no      | yes          | `--no-refiner`                                       |
-| `A3_refined` | yes                 | yes          | 3 candidates     | selects best        | 1 round | yes          | (defaults)                                           |
-| `A_no_domain` | yes               | no           | 3 candidates     | selects best        | 1 round | yes          | `--no-domain-agent`                                  |
-| `A_no_qg`  | yes                  | yes          | 3 candidates     | metrics only        | 1 round | no           | `--no-quality-gate`                                  |
-| `A_1cand_refined` | yes            | yes          | 1 candidate      | post-hoc scoring    | 1 round | yes          | `--num-candidates 1`                                 |
+| `B0_single_shot` | (existing baseline) | no       | 1 candidate (old pipeline) | post-hoc scoring | no      | no           | reuse `results/<agent>/baseline-1/<repo>/decomposition.json` | — |
+| `A1_gen_only` | yes                | yes          | 1 candidate      | post-hoc scoring    | no      | yes          | `--num-candidates 1 --no-refiner`                    | Domain Agent is placeholder — not yet concretized. |
+| `A2_eval_select` | yes             | yes          | 3 candidates     | selects best        | no      | yes          | `--no-refiner`                                       | Domain Agent is placeholder — not yet concretized. |
+| `A3_refined` | yes                 | yes          | 3 candidates     | selects best        | 1 round | yes          | (defaults)                                           | Domain Agent is placeholder — not yet concretized. |
+| `A_no_domain` | yes               | no ⚠️ (placeholder) | 3 candidates     | selects best        | 1 round | yes          | `--no-domain-agent`                                  |
+| `A_no_qg`  | yes                  | yes          | 3 candidates     | metrics only        | 1 round | no           | `--no-quality-gate`                                  | Domain Agent is placeholder — not yet concretized. |
+| `A_1cand_refined` | yes            | yes          | 1 candidate      | post-hoc scoring    | 1 round | yes          | `--num-candidates 1`                                 | Domain Agent is placeholder — not yet concretized. |
 
 `B0_single_shot` is **not** re-run by the framework. It is loaded from the
 existing `results/codex/baseline-1/<repo>/decomposition.json` (or whichever

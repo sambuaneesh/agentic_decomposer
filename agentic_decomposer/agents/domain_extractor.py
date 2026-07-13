@@ -1,8 +1,11 @@
 """Domain Knowledge Extractor agent.
 
-Stage 4 of the MVP roadmap. Calls the LLM with the evidence pack as
-machine-readable context and asks it to infer business capabilities,
-bounded-context hypotheses, and a class→capability matrix.
+⚠️ TEMPORARY PLACEHOLDER — NOT YET CONCRETIZED.
+
+This is a bare single-LLM-call scaffold hardwired to
+``prompts/domain_extractor.md``. The real domain modeling stage with richer
+evidence signals (data ownership, knowledge graphs, co-change history, topic
+embeddings) is planned for V2. See ``docs/mvp_roadmap.md``.
 
 When the ``--no-domain-agent`` ablation flag is active this agent writes an
 empty-but-schema-valid ``domain_model.json`` so downstream consumers do not
