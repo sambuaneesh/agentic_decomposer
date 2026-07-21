@@ -1,7 +1,4 @@
-# 06 - Metrics, Quality, And Refinement
-
-This chapter explains the feedback loop: how candidates are measured, how local
-quality is enforced, and how refinement changes a candidate.
+# Metrics, Quality, And Refinement
 
 ## Three Different Notions Of Good
 
@@ -222,23 +219,3 @@ Refiner sees domain capabilities and class-capability matrix.
 Refiner moves or splits classes by bounded context.
 Quality Gate verifies no class was lost or duplicated.
 ```
-
-## Checkpoint Questions
-
-- Why does the framework need both Wang metrics and a local Quality Gate?
-- Why is the composite score not a publishable result by itself?
-- What happens when the metric engine is missing?
-- Why is a patch better than free-form regeneration for refinement analysis?
-- Which operation would you use for an oversized service?
-- Which operation would you use for a fake dependency target?
-
-## Mini Exercise
-
-Create a tiny mental candidate with two services and one duplicate class. Predict:
-
-- which quality field fails;
-- which diagnostic appears;
-- whether recommendation is accept, refine, or reject;
-- which refiner operation could fix it.
-
-Then verify by reading [duplicate class diagnostic](../../agentic_decomposer/agents/decomposition_evaluator.py#L202).

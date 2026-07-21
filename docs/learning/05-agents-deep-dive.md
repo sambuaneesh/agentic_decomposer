@@ -1,8 +1,4 @@
-# 05 - Agents Deep Dive
-
-This chapter explains each agent in the framework. Read it with the source files
-open. The goal is to understand each agent's job, inputs, outputs, and design
-trade-offs.
+# Agents Deep Dive
 
 ## Shared Agent Contract
 
@@ -64,7 +60,7 @@ Read these helpers:
 
 ### Why This Design
 
-The old paper's A1..A6 artifacts were central but produced as part of a single
+Our ICSA paper's A1..A6 artifacts were central but produced as part of a single
 pipeline. This framework gives them an owner. That makes it possible to ablate
 evidence modes or replace A1..A5 with previous-paper artifacts.
 
@@ -106,7 +102,7 @@ Turn technical evidence into a business/domain model.
 
 ### Why This Agent Exists
 
-The old result showed that LLMs did well at cycle reduction but weaker at
+Our ICSA result showed that LLMs did well at cycle reduction but weaker at
 reference/domain/team alignment. The Domain Agent explicitly attacks the domain
 side of the problem before service generation.
 
@@ -122,16 +118,6 @@ Normal mode asks the LLM for:
 
 Ablation mode writes an empty schema-valid domain model. This lets the rest of
 the pipeline run unchanged.
-
-### Read Along
-
-Open [domain prompt](../../prompts/domain_extractor.md#L1), then return to
-[DomainExtractorAgent](../../agentic_decomposer/agents/domain_extractor.py#L35).
-
-Checkpoint:
-
-- What does the downstream Generator lose when the Domain Agent is ablated?
-- Why is an empty schema-valid file better than a missing file?
 
 ## Agent 3: Decomposition Generator
 
@@ -319,23 +305,3 @@ and applied in [patcher.py](../../agentic_decomposer/refinement/patcher.py#L34).
 | Evaluator | Tool | evaluation report | Reuse metrics and produce diagnostics. |
 | Quality Gate | Tool | quality report | Enforce structural validity and ablate governance. |
 | Refiner | Hybrid | patch + refined candidate | Turn one-shot generation into an iterative loop. |
-
-## Checkpoint Questions
-
-- Which agents can call an LLM?
-- Which agents are deterministic in the MVP?
-- Which agent owns A6?
-- Which agent writes `candidate_ranking.csv`?
-- Which agent produces controlled operations?
-- Why does `--no-domain-agent` not crash the Generator?
-
-## Mini Exercise
-
-Pick one class from a generated `evidence_pack.json`. Trace how it can appear in:
-
-```text
-classes -> domain_model class_capability_matrix -> candidate service classes -> quality gate assignment check -> final decomposition.json
-```
-
-If you can trace that path, you understand how the agents cooperate through
-artifacts.

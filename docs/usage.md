@@ -158,17 +158,3 @@ agentic_decomposer/runs/jpetstore-6_gpt5_80kconcat_seed1/
 The file `06_final/decomposition.json` has the same shape as the existing
 `results/<agent>/baseline-X/<repo>/decomposition.json` files, so it can be
 scored directly by the existing metric engine.
-
----
-
-## Reproducibility tips
-
-- Pin a model and a seed in the config file; record both in the run folder.
-- Don't edit prompts during an experiment batch. Prompt files are versioned in
-  [`prompts/`](../prompts/) and the run metadata records the framework version.
-- Don't edit a codebase between runs. The framework uses
-  `codebases/<system>/` as-is; pinning is done by your git checkout, not by
-  the framework.
-- LLM nondeterminism: same model + same seed will still vary slightly. For
-  publishable numbers, do `n >= 3` repeated runs and report mean ± std (see
-  [scripts/calculate_metrics_paper_comparison.py](../../scripts/calculate_metrics_paper_comparison.py) for the existing pattern).

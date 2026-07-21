@@ -1,7 +1,6 @@
-# 03 - Artifact Contracts
+# Artifact Contracts
 
-This chapter explains the JSON files that connect agents. If you understand the
-artifacts, the rest of the code becomes much easier.
+This chapter explains the JSON files that connect agents.
 
 ## The Core Pattern
 
@@ -228,19 +227,3 @@ business capability -> BC001
 
 Why not just cite names? Because names collide, change, and may be ambiguous.
 IDs make evidence citations machine-checkable.
-
-## Checkpoint Questions
-
-- Which artifact is the first one written?
-- Which artifact is the first one that requires an LLM in normal mode?
-- Which artifact connects evaluator feedback to refiner behavior?
-- Why does the framework need both schema validation and a Quality Gate?
-- Why is `final_output.json` not enough for the metric engine?
-
-## Mini Exercise
-
-Open a dry-run folder and inspect `00_config/run_config.json`. Then predict what
-files will appear after a real run. Compare your prediction with [RunLayout](../../agentic_decomposer/runs.py#L17).
-
-If you can explain every artifact name in that layout, you are ready to read the
-controller.

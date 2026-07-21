@@ -1,11 +1,5 @@
 # Ablation experiments
 
-The MVP must prove that the agentic components are **not decorative** — i.e.
-each agent earns its place. This document describes the ablation grid run by
-[`experiments/run_ablation.py`](../experiments/run_ablation.py).
-
----
-
 ## Ablation grid
 
 Each variant is a single CLI invocation. The grid maps directly onto the

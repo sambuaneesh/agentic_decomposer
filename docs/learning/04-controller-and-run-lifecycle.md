@@ -1,4 +1,4 @@
-# 04 - Controller And Run Lifecycle
+# Controller And Run Lifecycle
 
 This chapter teaches the execution spine of the system. If the agents are the
 specialists, the Process Controller is the conductor.
@@ -33,10 +33,7 @@ What does MoJoFM mean?
 
 Those belong to specialized agents or the external metric engine.
 
-## The Run Method As A Story
-
-Open [ProcessController.run](../../agentic_decomposer/agents/process_controller.py#L41)
-and follow the code top to bottom.
+## The Run Method
 
 The run lifecycle is:
 
@@ -53,8 +50,6 @@ re-evaluate refined candidate
 select final candidate
 write final_output.json and decomposition.json
 ```
-
-This is the main file to read when you feel lost.
 
 ## Stage 0: Create The Run Folder
 
@@ -220,41 +215,3 @@ research artifacts is worse than a visible failed run.
 The exception is the metric engine: if the engine is unavailable, the Evaluator
 can emit null metrics and warnings. That lets development continue on machines
 that cannot run the full Java metric stack.
-
-## Checkpoint Questions
-
-- Why is the controller deterministic instead of LLM-backed?
-- Why does the controller pass artifacts in memory and also rely on JSON files?
-- Why does the Refiner produce a patch instead of a whole new decomposition?
-- What prevents a worse refined candidate from being selected?
-- Why are there two final files?
-
-## Mini Exercise: Trace A Dry Run
-
-Run:
-
-```powershell
-python -m agentic_decomposer run --system demo --dry-run
-```
-
-Then open:
-
-```text
-agentic_decomposer/runs/demo_gpt5_80kconcat_seed1/00_config/run_config.json
-```
-
-Question: which controller branches did dry-run skip? Confirm by reading
-[CLI run one](../../agentic_decomposer/cli.py#L128).
-
-## Ownership Exercise
-
-Imagine you want to add a token-budget stopping condition. Where should it go?
-
-A good answer:
-
-- config field in `RunConfig` and schema;
-- controller loop checks before calling Refiner again;
-- final output records `stopping_reason = token_budget_exceeded`;
-- docs and usage table updated.
-
-If that answer feels obvious, you are starting to own the controller pattern.

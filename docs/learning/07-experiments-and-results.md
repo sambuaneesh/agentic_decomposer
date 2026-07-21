@@ -1,8 +1,5 @@
 # 07 - Experiments And Results
 
-This chapter explains how the framework becomes a paper experiment. The code is
-not just a tool; it is a controlled experimental harness.
-
 ## MVP Experiment Question
 
 The first experiment should answer:
@@ -196,31 +193,3 @@ python -m agentic_decomposer run --config configs/mvp_jpetstore.yaml --dry-run
 python -m agentic_decomposer run --config configs/mvp_all_systems.yaml --system all --dry-run
 python agentic_decomposer/experiments/run_ablation.py --system demo --runs 1 --dry-run
 ```
-
-## Checkpoint Questions
-
-- Which comparison isolates candidate diversity?
-- Which comparison isolates the Refiner?
-- Which comparison isolates the Domain Agent? (Note: Domain Extractor is currently a placeholder.)
-- Why should TC be interpreted cautiously in the MVP?
-- Which artifact would you inspect to explain a metric regression after refinement?
-
-## Mini Exercise
-
-Design the first paper table from the ablation CSV:
-
-```text
-Rows: system x variant
-Columns: MoJoFM, CiD, CMod, DI, BCP, TC, tokens, runtime
-Group: B0, A1, A2, A3
-```
-
-Then design one diagnostic table:
-
-```text
-Rows: system
-Columns: selected candidate strategy, pre-refinement score, post-refinement score, applied operations
-```
-
-If you can design both tables, you understand how experiment outputs connect to
-the paper story.

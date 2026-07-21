@@ -1,4 +1,4 @@
-# 11 - Source File Index
+# Source File Index
 
 This is a file-by-file index for the framework source. Use it after the learning
 path when you want to answer: "What is this file for, and when should I modify
@@ -128,17 +128,3 @@ Use this routing table:
 | Add a quality rule | `metrics/quality_gate.py`, evaluator diagnostics, evaluation schema. |
 | Add a refiner operation | `operations.py`, `patcher.py`, refinement schema, refiner prompt. |
 | Add a benchmark system | `paths.py`, schemas, metric engine support, docs, tests. |
-
-## Final Checkpoint
-
-Pick any file above at random. You should be able to answer:
-
-```text
-What artifact does this file read or write?
-Which stage owns it?
-What would break if this file changed?
-Which doc chapter explains the surrounding concept?
-```
-
-If you can answer those four questions for most files, you have moved from
-"reading the code" to owning the architecture.

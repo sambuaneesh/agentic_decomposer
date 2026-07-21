@@ -1,6 +1,4 @@
-# 09 - Glossary And Debugging Guide
-
-This chapter is a reference. Use it when terms blur together or a run fails.
+# Glossary And Debugging Guide
 
 ## Glossary
 
@@ -158,17 +156,3 @@ Before running expensive experiments:
 - dry-run config and ablation scripts;
 - start with JPetStore only;
 - inspect one full run before all-system batch.
-
-## Mental Debugging Pattern
-
-When something breaks, ask in this order:
-
-```text
-Which stage failed?
-Which artifact was expected?
-Was the artifact missing, invalid, or semantically rejected?
-Is this an LLM output problem, local quality problem, path problem, or metric-engine problem?
-Which schema or gate owns the failure?
-```
-
-That pattern will get you to the right file quickly.

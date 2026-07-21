@@ -1,9 +1,8 @@
-# 10 - LLM, Prompts, JSON Parsing, And Logging
+# LLM, Prompts, JSON Parsing, And Logging
 
-This chapter covers the supporting machinery around LLM calls. The earlier
-chapters explain the pipeline and agents; this one explains how prompts are
-loaded, how model responses are parsed, how token usage is recorded, and how to
-debug raw provider output.
+This file covers the following:
+explains how prompts are loaded, how model responses are parsed, how token usage is recorded,
+and how to debug raw provider output.
 
 ## Why This Chapter Matters
 
@@ -234,17 +233,3 @@ A future version could use provider-native JSON schema/function calling behind
 - Why is JSON parsing separate from schema validation?
 - Which files define the Generator's three strategies?
 - Where would you add retry or rate-limit behavior later?
-
-## Mini Exercise
-
-Open [generator_common.md](../../prompts/generator_common.md#L1) and find the
-hard rules. Then open [run_quality_gate](../../agentic_decomposer/metrics/quality_gate.py#L101).
-
-Question:
-
-```text
-Which hard rules are enforced by prompt only, and which are checked by code?
-```
-
-That comparison is a good way to understand prompt engineering versus defensive
-engineering.

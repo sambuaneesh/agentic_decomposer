@@ -1,11 +1,6 @@
-# 02 - Repository Map And Entrypoints
-
-This chapter teaches where things live and how execution starts. The goal is to
-make the repository feel small enough to navigate.
+# Repository Map And Entrypoints
 
 ## Three Layers Of The Workspace
-
-Think of the workspace as three layers:
 
 ```text
 agentic-experiments/
@@ -18,13 +13,12 @@ agentic-experiments/
 ../src/metrics/scripts/      external Wang-style metric engine
 ```
 
-The new framework does not own the benchmark systems or metric engine. It reads
+The current framework does not own the benchmark systems or metric engine. It reads
 those assets and writes new run outputs.
 
 ## Framework Layout
 
 Open [framework README layout](../../README.md#L38) first. Then map that to
-these roles:
 
 | Folder | Role |
 |--------|------|
@@ -137,34 +131,8 @@ Why use a layout object instead of hard-coded strings in every agent?
 
 ## The First Full Trace
 
-Follow this trace without reading agent internals yet:
-
 1. [CLI main](../../agentic_decomposer/cli.py#L144) chooses systems.
 2. [CLI run one](../../agentic_decomposer/cli.py#L128) builds a `RunConfig` and a `ProcessController`.
 3. [ProcessController init](../../agentic_decomposer/agents/process_controller.py#L35) creates a layout.
 4. [ProcessController.run](../../agentic_decomposer/agents/process_controller.py#L41) executes stages.
 5. [RunLayout.create](../../agentic_decomposer/runs.py#L67) makes folders.
-
-Checkpoint:
-
-- Which file decides where `evidence_pack.json` goes?
-- Which file knows the difference between `jpetstore-6` and `jpetstore`?
-- Which file turns `--system all` into multiple runs?
-- Which script should you use for the ablation study?
-
-## Mini Exercise
-
-Predict the run folder for this command:
-
-```powershell
-python -m agentic_decomposer run --system spring-petclinic --model gpt-5 --summarisation-strategy 80k_concat --seed 2 --dry-run
-```
-
-Then verify by running it. You should expect a folder under:
-
-```text
-agentic_decomposer/runs/spring-petclinic_gpt5_80kconcat_seed2/
-```
-
-If your prediction is correct, you understand the CLI/config/path/run-layout
-surface well enough for the next chapter.

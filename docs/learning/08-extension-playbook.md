@@ -1,7 +1,7 @@
-# 08 - Extension Playbook
+# Extension Playbook
 
-This chapter teaches how to change the framework without breaking the research
-design. The goal is to help a new owner form their own ideas safely.
+This file teaches how to change the framework without breaking the research
+design. The goal is to help a new owner form their own ideas safely. (So for LLMs to understand)
 
 ## The Golden Rule
 
@@ -205,19 +205,3 @@ Weaker first extensions:
 - a full Quality Governance Agent with subjective rules and no measurements;
 - replacing the deterministic controller with an agent framework before the
   current design is fully tested.
-
-## Final Ownership Exercise
-
-Pick one idea and write a one-page mini design with these headings:
-
-```text
-Motivation
-Artifact changes
-Code changes
-Experiment or ablation
-Expected metric effect
-Failure modes
-No-API validation plan
-```
-
-If the design is easy to map to files, you understand the framework deeply.

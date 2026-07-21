@@ -1,18 +1,4 @@
-# agentic_decomposer
-
-A multi-agent framework for monolith-to-microservices decomposition.
-
-Built on top of the four monolith codebases and metric engine already used in the
-single-shot LLM decomposition paper. This package adds **specialised agents** with
-**explicit JSON artifact contracts** and an **evaluate→refine feedback loop**.
-
-The motivation, full agent spec, and experimental roadmap are written up in detail
-under [docs/](docs/). New readers should start with the guided onboarding track:
-[docs/learning/README.md](docs/learning/README.md).
-
----
-
-## TL;DR — what this framework does
+## TL;DR - what this framework does
 
 ```
 Monolith repo (pinned SHA)
@@ -114,7 +100,7 @@ located the same way it is in [scripts/calculate_metrics_paper_comparison.py](..
 
 ## Where each prior-paper input is reused
 
-| Old paper artifact                          | Reused here as                                                 |
+| ICSA paper artifact                          | Reused here as                                                 |
 | ------------------------------------------- | -------------------------------------------------------------- |
 | Pinned monolith codebases                   | [codebases/](../codebases/) (read-only input)                  |
 | Static class dependency graph (A6)          | [graph-artifacts/](../graph-artifacts/) (Evidence Constructor) |
@@ -122,7 +108,3 @@ located the same way it is in [scripts/calculate_metrics_paper_comparison.py](..
 | Metric engine (Java + Python)               | `../src/metrics/scripts/evaluate_decomposition.py` via subprocess |
 | Single-shot baseline                        | The `B0` reference in every comparison table                   |
 | Reference SRMs                              | Used by the metric engine for MoJoFM                            |
-
-See [docs/learning/README.md](docs/learning/README.md) for the full read-along
-curriculum, or [docs/architecture.md](docs/architecture.md) for the concise
-architecture reference.
